@@ -78,8 +78,11 @@ class La_Controller_Action_Helper_Save
             $controller->redirect($url);
         }
         
-        $params = array('formData' => $form->getValues());
-        
-        $controller->forward('form', null, null, $params);
+        $form->populate($form->getValues());
+
+        $controller->getHelper('Message')->direct('ERROR');
+        $controller->view->errors   = $form->getMessages();
+        $controller->view->form     = $form;
+        $controller->render('form');
     }
 }

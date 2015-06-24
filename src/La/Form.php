@@ -204,10 +204,10 @@ class La_Form extends ZendX_JQuery_Form
             $id->setDecorators(array('ViewHelper'));
         }
         
-        parent::addElement('button', 'Enviar', array('class' => 'btn btn-small btn-primary', 'type' => 'submit'));
+        parent::addElement('button', 'Enviar', array('class' => 'btn btn-primary m-r-5 m-b-5 pull-right', 'type' => 'submit'));
         $this->getElement('Enviar')->removeDecorator('DtDdWrapper');
         $this->getElement('Enviar')->addDecorator(array('wrapper' => 'HtmlTag'),   
-                                                  array('tag' => 'div', 'class' => 'submit'))
+                                                  array('tag' => 'div', 'class' => 'form-group col-sm-12'))
                                    ->setOrder(1000);
     }
 
@@ -230,6 +230,16 @@ class La_Form extends ZendX_JQuery_Form
     {
         $this->_changeFilters();
         return parent::isValid($data);
+    }
+    
+    public function setWrapperDecorator(Zend_Form_Element $element, $size)
+    {
+        $wrapper = array('wrapper' => 'HtmlTag');
+        $options = array('tag' => 'div', 'class' => 'form-group col-sm-'.$size);
+        
+        $element->addDecorator($wrapper, $options);
+        
+        return $this;
     }
     
     public function isValidPartial(array $data) 
@@ -583,5 +593,11 @@ class La_Form extends ZendX_JQuery_Form
         }
         
         return $return;
+    }
+    
+    public function edit() 
+    {
+        $this->Enviar->setName('Editar');
+        return $this;
     }
 }
