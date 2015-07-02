@@ -34,15 +34,27 @@ class La_Controller_Action_Helper_Delete extends Zend_Controller_Action_Helper_A
                     $table->logicDelete($where);
                 }
                 
-                $message = $controller->getHelper('Message')->direct('SUCCESS');
+                $controller->getHelper('flashMessenger')->addMessage([
+                    'type' => 'success',
+                    'msg'  => 'Registro(s) deletado(s) com sucesso.'
+                ]);
+                
                 $controller->redirect($url);
             } catch (Exception $e) {
-                $message = $controller->getHelper('Message')->direct('ERROR_DELETE');
+                $controller->getHelper('flashMessenger')->addMessage([
+                    'type' => 'error',
+                    'msg'  => 'O registro não foi excluído.'
+                            . ' Verifique os dados e tente novamente.'
+                ]);
                 $controller->redirect($url);
             }
         }
         
-        $message = $controller->getHelper('Message')->direct('ERROR_DELETE');
+        $controller->getHelper('flashMessenger')->addMessage([
+            'type' => 'error',
+            'msg'  => 'O registro não foi excluído.'
+                    . ' Verifique os dados e tente novamente.'
+        ]);
         $controller->redirect($url);
     }
 }

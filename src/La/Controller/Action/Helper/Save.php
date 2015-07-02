@@ -74,13 +74,21 @@ class La_Controller_Action_Helper_Save
                 return;
             }
              
-            $message = $controller->getHelper('Message')->direct('SUCCESS');
+            $controller->getHelper('flashMessenger')->addMessage([
+                'type' => 'success',
+                'msg'  => 'Realizado com sucesso.'
+            ]);
+            
             $controller->redirect($url);
         }
         
         $form->populate($form->getValues());
+        
+        $controller->getHelper('flashMessenger')->addMessage([
+            'type' => 'error',
+            'msg'  => 'As informações não foram salvas. Verifique os dados e tente novamente.'
+        ]);
 
-        $controller->getHelper('Message')->direct('ERROR');
         $controller->view->errors   = $form->getMessages();
         $controller->view->form     = $form;
         $controller->render('form');
