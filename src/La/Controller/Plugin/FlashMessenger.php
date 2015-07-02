@@ -1,16 +1,13 @@
 <?php
-    
-class La_Controller_Plugin_FlashMessenger extends Zend_Controller_Plugin_Abstract
+class La_Controller_Plugin_FlashMessenger extends La_Controller_Plugin_Abstract
 {
-    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    public function init()
     {
-        $view  = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer')->view;
-        $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+        $this->view->messages = NULL;
         
-        $view->messages = NULL;
-        
-        if ($flash->hasMessages()) {
-            $view->messages = $flash->getMessages();
+        if ($this->flashMessenger()->hasMessages()) {
+            $this->view->messages = $this->flashMessenger()->getMessages();
         }
     }
+
 }
