@@ -5,6 +5,14 @@ class La_View_Helper_FormDate extends ZendX_JQuery_View_Helper_DatePicker
 
     public function formDate($name, $value = null, array $params = array(), array $attribs = array())
     {
+        if (!isset($params['format'])) {
+            $params['format'] = 'dd/mm/yyyy';
+        }
+        
+        if (!isset($params['language'])) {
+            $params['language'] = 'pt-BR';
+        }
+        
         $id    = isset($attribs['id']) ? $attribs['id'] : $name;
         $html  = '<div class="input-group date">';
         $html .= '<span class="input-group-addon"><i class="fa fa-calendar"></i></span>';
