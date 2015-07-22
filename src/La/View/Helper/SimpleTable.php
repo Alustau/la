@@ -85,6 +85,12 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
      * @var type array
      */
     protected $_totalizers;
+    
+    /**
+     *
+     * @var type bool
+     */
+    protected $_responsive = true;
 
     /**
      *
@@ -155,6 +161,18 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
     public function setController($controller)
     {
         $this->_controller = $controller;
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param string bool
+     * 
+     * @return \La_View_Helper_SimpleTable 
+     */
+    public function setResponsive($bool)
+    {
+        $this->_responsive = $bool;
         return $this;
     }
 
@@ -349,10 +367,15 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
             if ($this->_deleteUrl) {
                 $url = $this->_deleteUrl;
             }
-
-            $html  = '<div class="list">';
+            
+            $html  = '';
+                
+            if ($this->_responsive) {
+                $html  = '<div class="table-responsive">';
+            }
+            
             $html .= sprintf('<form action="%s" method="post" id="%s">', $url, $this->_id);
-            $html .= '<table class="table table-striped table-bordered table-hover">';
+            $html .= '<table class="table table-bordered">';
             $html .= '<thead>';
             $html .= '<tr>';
             
@@ -443,7 +466,10 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
             $html .= '</tbody>';
             $html .= '</table>';
             $html .= '</form>';
-            $html .= '</div>';
+            
+            if ($this->_responsive) {
+                $html .= '</div>';
+            }
             
             if ($this->getActivePaginator()
                 && $this->_data instanceof Zend_Paginator
