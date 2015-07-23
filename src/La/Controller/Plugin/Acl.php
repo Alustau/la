@@ -31,7 +31,7 @@ class La_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             }
             
             if (isset($identity->role)) {
-                $request->setModuleName('default')
+                $request->setModuleName('core')
                         ->setControllerName('error')
                         ->setActionName('access');
                 return false;
@@ -54,11 +54,11 @@ class La_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         
         if (!$acl) {
             $acl          = new Zend_Acl();
-            $role         = new Auth_Model_DbTable_Role();
-            $resource     = new Auth_Model_DbTable_Resource();
-            $roleResource = new Auth_Model_DbTable_RoleResource();
-            
+            $role         = new \Auth\Model\DbTable\Role();
+            $resource     = new \Auth\Model\DbTable\Resource();
+            $roleResource = new \Auth\Model\DbTable\RoleResource();
             $roles     = $role->fetchAll("name <> 'Todos'");
+            
             $resources = $resource->getDistinctModules(); 
             $relations = $roleResource->fetchAllRelations();
             
