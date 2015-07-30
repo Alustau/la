@@ -57,8 +57,7 @@ class La_Form extends ZendX_JQuery_Form
         $this->setDecorators(array(
             'FormElements',
             array('HtmlTag', array('tag' => 'div', 'class' => 'zend_form')),
-            'Form',
-            'Validator'
+            'Form'
         ));
         
         if ($this->_table) {
