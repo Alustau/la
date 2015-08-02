@@ -59,10 +59,10 @@ class La_Controller_Action_Helper_Save
             }
             
             if ($this->getRequest()->isXmlHttpRequest()) {
-                $jsonData = array(
-                    'id' => $id,
-                    'name' => $formData[$table->getNameForOptionField()]
-                );
+                $jsonData = [
+                    'status' => true,
+                    'id'     => $id
+                ];
                 
                 if ($this->_responseXmlHttpRequest) {
                     $formData['id'] = $id;
@@ -80,6 +80,13 @@ class La_Controller_Action_Helper_Save
             ]);
             
             $controller->redirect($url);
+        }
+        
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $controller->getHelper('json')->direct([
+                'status' => false,
+                'errors' => $form->getMessages()
+            ]);
         }
         
         $form->populate($form->getValues());
