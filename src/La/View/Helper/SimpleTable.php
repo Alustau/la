@@ -384,7 +384,7 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
             }
             
             if ($buttonsLength) {
-                $html .= sprintf('<td width="%d">&nbsp;</td>', ($buttonsLength * 30));
+                $html .= sprintf('<td width="%d">&nbsp;</td>', ($buttonsLength * 40));
             }
             
             foreach ($this->_headers as $key => $header) {
