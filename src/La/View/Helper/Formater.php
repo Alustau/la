@@ -5,9 +5,12 @@ class La_View_Helper_Formater extends Zend_View_Helper_Abstract
 
     protected $helpers;
 
-    public function formater(array $helpers)
+    public function formater(array $helpers = null)
     {
-        $this->setHelpers($helpers);
+        if ($helpers) {
+            $this->setHelpers($helpers);
+        }
+        
         return $this;
     }
 
