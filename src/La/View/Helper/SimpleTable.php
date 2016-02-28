@@ -91,6 +91,12 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
      * @var type bool
      */
     protected $_responsive = true;
+    
+    /**
+     *
+     * @var type bool
+     */
+    protected $_dataProp = false;
 
     /**
      *
@@ -334,6 +340,17 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
         $this->_totalizers = $totalizers;
         return $this;
     }
+    
+    public function getDataProp() 
+    {
+        return $this->_dataProp;
+    }
+    
+    public function setDataProp($bool = true) 
+    {
+        $this->_dataProp = $bool;
+        return $this;
+    }
 
     /**
      *
@@ -403,7 +420,11 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
 
             if (count($this->_data)) {
                 foreach ($this->_data as $key => $data) {
-                    $html .= '<tr>';
+                    if ($this->_dataProp) {
+                        $html .= '<tr ' . $this->renderDataProp($data) . ' >';
+                    } else {
+                        $html .= '<tr>';
+                    }
                 
                     if ($this->_showCheckbox) {
                         $html .= sprintf('<td><label><input class="check-delete" type="checkbox" name="id[]" value="%s"><span class="lbl"></span></label></td>', $data['id']);
@@ -506,6 +527,19 @@ class La_View_Helper_SimpleTable extends Zend_View_Helper_Abstract
         } catch ( Exception $e ) {
             return $e->getMessage();
         }
+        return $html;
+    }
+    
+    private function renderDataProp(array $data) 
+    {
+        $html = "";
+        
+        foreach ($data as $key => $value) {
+            if ($value) {
+                $html .= "data-$key='$value' ";
+            }
+        }
+        
         return $html;
     }
 }
